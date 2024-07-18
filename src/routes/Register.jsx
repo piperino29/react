@@ -90,11 +90,12 @@ const Register = () => {
           <FormError error={errors.repassword} />
         </FormInput>
 
-        {loading ? (
-          <ButtonLoading />
-        ) : (
-          <Button text="Registrar" type={"submit"} />
-        )}
+        <Button
+          text="Registrar"
+          type={"submit"}
+          color="blue"
+          loading={loading}
+        />
       </form>
     </>
   );

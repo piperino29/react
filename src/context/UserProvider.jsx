@@ -14,7 +14,6 @@ const UserProvider = (props) => {
 
   useEffect(() => {
     const unSusbride = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         const { email, photoURL, displayName, uid } = user;
         setUser({ email, photoURL, displayName, uid });
