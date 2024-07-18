@@ -15,13 +15,13 @@ const Navbar = () => {
     <div>
       {user ? (
         <>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/">Home </NavLink>
           <button onClick={handleSignOut}>LogOut</button>
         </>
       ) : (
         <>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+          <NavLink to="/login">Login | </NavLink>
+          <NavLink to="/register">Register | </NavLink>
         </>
       )}
     </div>

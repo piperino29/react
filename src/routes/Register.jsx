@@ -6,6 +6,8 @@ import { ErroresFirebase } from "../utils/ErroresFirebase";
 import FormError from "../components/FormError";
 import { formValidate } from "../utils/formValidate";
 import FormInput from "../components/FormInput";
+import TitleForm from "../components/TitleForm";
+import Button from "../components/Button";
 
 const Register = () => {
   const { registerUser } = useContext(UserContext);
@@ -33,16 +35,16 @@ const Register = () => {
       navegate("/");
     } catch (error) {
       console.log(error.code);
-      setError("firebase", {
-        message: ErroresFirebase(error.code),
+      const { code, message } = ErroresFirebase(error.code);
+      setError(code, {
+        message,
       });
     }
   };
 
   return (
     <>
-      <h1>Register</h1>
-      <FormError error={errors.firebase} />
+      <TitleForm title={"Register"} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="email"
@@ -51,8 +53,11 @@ const Register = () => {
             required,
             pattern: patternEmail,
           })}
-        ></FormInput>
-        <FormError error={errors.email} />
+          label="Ingresa tu correo"
+          error={errors.email}
+        >
+          <FormError error={errors.email} />
+        </FormInput>
 
         <FormInput
           type="password"
@@ -61,19 +66,25 @@ const Register = () => {
             minLength,
             validate: validateTrim,
           })}
-        ></FormInput>
-        <FormError error={errors.password} />
+          label="Ingrese contraseña"
+          error={errors.password}
+        >
+          <FormError error={errors.password} />
+        </FormInput>
 
         <FormInput
           type="password"
           placeholder="Ingrese contraseña"
           {...register("repassword", {
-            validate: validateEquals(getValues),
+            validate: validateEquals(getValues("password")),
           })}
-        ></FormInput>
-        <FormError error={errors.repassword} />
+          label="Repita la contraseña"
+          error={errors.repassword}
+        >
+          <FormError error={errors.repassword} />
+        </FormInput>
 
-        <button type="submit">Registar</button>
+        <Button text="Registrar" type={"submit"} />
       </form>
     </>
   );

@@ -6,12 +6,13 @@ import { formValidate } from "../utils/formValidate";
 import { ErroresFirebase } from "../utils/ErroresFirebase";
 import FormInput from "../components/FormInput";
 import FormError from "../components/FormError";
+import TitleForm from "../components/TitleForm";
+import Button from "../components/Button";
 
 const Login = () => {
   const { loginUser } = useContext(UserContext);
   const navegate = useNavigate();
-  const { required, patternEmail, minLength, validateTrim, validateEquals } =
-    formValidate();
+  const { required, patternEmail, minLength, validateTrim } = formValidate();
 
   const {
     register,
@@ -31,16 +32,16 @@ const Login = () => {
       navegate("/");
     } catch (error) {
       console.log(error.code);
-      setError("firebase", {
-        message: ErroresFirebase(error.code),
+      const { code, message } = ErroresFirebase(error.code);
+      setError(code, {
+        message,
       });
     }
   };
 
   return (
     <>
-      <h1>Login </h1>
-      <FormError error={errors.firebase} />
+      <TitleForm title="Login" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="email"
@@ -49,8 +50,12 @@ const Login = () => {
             required,
             pattern: patternEmail,
           })}
-        ></FormInput>
-        <FormError error={errors.email} />
+          label="Ingrese su correo"
+          error={errors.email}
+        >
+          <FormError error={errors.email} />
+        </FormInput>
+
         <FormInput
           type="password"
           placeholder="Ingrese contraseña"
@@ -58,9 +63,13 @@ const Login = () => {
             minLength,
             validate: validateTrim,
           })}
-        ></FormInput>
-        <FormError error={errors.password} />
-        <button type="submit">Acceder</button>
+          label="Ingrese su contraseña"
+          error={errors.password}
+        >
+          <FormError error={errors.password} />
+        </FormInput>
+
+        <Button text="Login" type={"submit"} />
       </form>
     </>
   );
