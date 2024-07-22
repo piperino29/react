@@ -25,7 +25,7 @@ const Navbar = () => {
             URLShort APP
           </span>
         </Link>
-        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <div className="flex md:order-2 space-x-3 rtl:space-x-reverse">
           {user ? (
             <>
               <NavLink to="/" className={classButtonBlue}>

@@ -9,6 +9,10 @@ export const formValidate = (getValues) => {
         /[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})/,
       message: "Formato de Email incorrecto",
     },
+    patternURL: {
+      value: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
+      message: "Formato de URL incorrecto",
+    },
     minLength: {
       value: 6,
       message: "Mínimo 6 carácteres",

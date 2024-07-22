@@ -9,6 +9,8 @@ import {
   deleteDoc,
   addDoc,
   doc,
+  updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
@@ -68,6 +70,34 @@ export const useFireStore = () => {
     }
   };
 
+  const updateData = async (nanoid, newUrl) => {
+    try {
+      setLoading((prev) => ({ ...prev, updateData: true }));
+      const docRef = doc(db, "urls", nanoid);
+      await updateDoc(docRef, { origin: newUrl });
+      setData(
+        data.map((item) =>
+          item.nanoid === nanoid ? { ...item, origin: newUrl } : item
+        )
+      );
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading((prev) => ({ ...prev, updateData: false }));
+    }
+  };
+
+  const searchData = async (nanoid) => {
+    try {
+      const docRef = doc(db, "urls", nanoid);
+      const docSnap = await getDoc(docRef);
+      return docSnap;
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  };
+
   return {
     data,
     error,
@@ -75,5 +105,7 @@ export const useFireStore = () => {
     getData,
     addData,
     deleteData,
+    updateData,
+    searchData,
   };
 };
